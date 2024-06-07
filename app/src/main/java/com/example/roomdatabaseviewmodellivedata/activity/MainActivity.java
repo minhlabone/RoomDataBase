@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edtSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // thay doi 1
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
