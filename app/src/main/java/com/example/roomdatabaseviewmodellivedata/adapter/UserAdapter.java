@@ -33,6 +33,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     User s = null;
 
 
+
+  // thay doi 1
+
     public UserAdapter(List<User> userList, Context context, ItemClickListener itemClickListener) {
         this.userList = userList;
         this.context = context;
