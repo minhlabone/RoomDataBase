@@ -32,7 +32,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     boolean ischeck;
     User s = null;
   // thay doi 1
-
+  // thay doi 2
     public UserAdapter(List<User> userList, Context context, ItemClickListener itemClickListener) {
         this.userList = userList;
         this.context = context;
