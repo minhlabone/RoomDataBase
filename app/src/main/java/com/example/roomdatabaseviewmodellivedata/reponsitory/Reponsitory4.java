@@ -1,4 +1,4 @@
-package com.example.roomdatabaseviewmodellivedata;
+package com.example.roomdatabaseviewmodellivedata.reponsitory;
 
 import android.app.Application;
 import android.os.Handler;
@@ -6,13 +6,17 @@ import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.roomdatabaseviewmodellivedata.database.UserDAO2;
+import com.example.roomdatabaseviewmodellivedata.database.UserDataBase3;
+import com.example.roomdatabaseviewmodellivedata.model.User;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Reponsitory4 {
 
-    private  UserDAO2 userDAO2;
+    private UserDAO2 userDAO2;
     private UserDataBase3 userDataBase3;
 //    private LiveData<List<User>> userList;
     ExecutorService executor;

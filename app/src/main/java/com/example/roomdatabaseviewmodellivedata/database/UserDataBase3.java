@@ -1,4 +1,4 @@
-package com.example.roomdatabaseviewmodellivedata;
+package com.example.roomdatabaseviewmodellivedata.database;
 
 import android.content.Context;
 
@@ -9,16 +9,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {User.class}, version = 1)
+import com.example.roomdatabaseviewmodellivedata.model.User;
+
+@Database(entities = {User.class}, version = 2)
 
 
 public abstract class UserDataBase3 extends RoomDatabase {
-//    static Migration migration_1_2 = new Migration(1,2) {
-//        @Override
-//        public void migrate(@NonNull SupportSQLiteDatabase supportSQLiteDatabase) {
-//               supportSQLiteDatabase.execSQL("ALTER TABLE user_table ALTER COLUMN user_image String" );
-//        }
-//    };
+    static Migration migration = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase supportSQLiteDatabase) {
+              supportSQLiteDatabase.execSQL("ALTER TABLE user_table ADD COLUMN user_favorite INTEGER DEFAULT 0 NOT NULL ");
+        }
+    };
     public abstract UserDAO2 getUserDAO2();
 
     private static UserDataBase3 dbInstance;
@@ -26,7 +28,9 @@ public abstract class UserDataBase3 extends RoomDatabase {
     public static synchronized UserDataBase3 getInstance(Context context) {
         if (dbInstance == null) {
             dbInstance = Room.databaseBuilder(context.getApplicationContext(),UserDataBase3.class,"contex_table")
-                    .fallbackToDestructiveMigration().build();
+                    .fallbackToDestructiveMigration()
+                    .addMigrations(migration)
+                    .build();
         }
         return dbInstance;
     }

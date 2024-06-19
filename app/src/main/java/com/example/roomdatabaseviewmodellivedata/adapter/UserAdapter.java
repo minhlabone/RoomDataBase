@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roomdatabaseviewmodellivedata.R;
-import com.example.roomdatabaseviewmodellivedata.User;
+import com.example.roomdatabaseviewmodellivedata.model.User;
 import com.example.roomdatabaseviewmodellivedata.Utils.Ultils;
 import com.example.roomdatabaseviewmodellivedata.sharePrefence.DataLocal2;
 
@@ -28,9 +28,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     List<User> userList;
     Context context;
     ItemClickListener itemClickListener;
-    User user1;
+//    User user1;
     boolean ischeck;
-    User s = null;
+//    User s = null;
 
 
 
@@ -49,6 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     public interface ItemClickListener {
         void onClickUpdate(int pos);
+        void onClickUpateFavo(int pos,int favo);
     }
 
     @NonNull
@@ -60,7 +61,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_recyclerview);
         User user = userList.get(position);
         holder.tvAddress.setText(user.getAddress());
         holder.tvName.setText(user.getName());
@@ -68,48 +68,59 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         byte[] decode = Base64.decode(user.getImage(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
         holder.imgUser.setImageBitmap(bitmap);
-        holder.itemView.startAnimation(animation);
+        if(user.getIsFavorite() == 0){
+            holder.imgFavorite.setImageResource(R.drawable.hearth);
+        }else {
+            holder.imgFavorite.setImageResource(R.drawable.hearthred);
 
-
+        }
         holder.imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ischeck = DataLocal2.getFavorite(pos);
                 ischeck = !ischeck;
-                if (ischeck == false) {
-                    holder.imgFavorite.setImageResource(R.drawable.hearth);
-                    if(Ultils.userFavorite.contains(userList.get(pos))){
-                        Ultils.userFavorite.remove(userList.get(pos));
-                    }
-                } else {
+                if(ischeck == true){
                     holder.imgFavorite.setImageResource(R.drawable.hearthred);
-                    Ultils.userFavorite.add(userList.get(pos));
-                    Log.d("AAA","add " +  String.valueOf(Ultils.userFavorite.size()));
+                    itemClickListener.onClickUpateFavo(pos,1);
+                }else {
+                    holder.imgFavorite.setImageResource(R.drawable.hearth);
+                    itemClickListener.onClickUpateFavo(pos,0);
                 }
-                // Lưu trạng thái icon yêu thích
-                DataLocal2.setSaveFavorite(ischeck,pos);
-                // Lưu user đã tích yêu thích vào share
-                DataLocal2.setObjectFavorite(userList.get(pos),pos,ischeck);
-            }
 
+ //                ischeck = DataLocal2.getFavorite(pos);
+//                ischeck = !ischeck;
+//                if (ischeck == false) {
+//                    holder.imgFavorite.setImageResource(R.drawable.hearth);
+//                    if(Ultils.userFavorite.contains(userList.get(pos))){
+//                        Ultils.userFavorite.remove(userList.get(pos));
+//                    }
+//                } else {
+//                    holder.imgFavorite.setImageResource(R.drawable.hearthred);
+//                    Ultils.userFavorite.add(userList.get(pos));
+//                    Log.d("AAA","add " +  String.valueOf(Ultils.userFavorite.size()));
+//                }
+//                // Lưu trạng thái icon yêu thích
+//                DataLocal2.setSaveFavorite(ischeck,pos);
+//                // Lưu user đã tích yêu thích vào share
+//                DataLocal2.setObjectFavorite(userList.get(pos),pos,ischeck);
+            }
         });
-        ischeck = DataLocal2.getFavorite(position);
-        User user1 = DataLocal2.getUser(position);
-        if(ischeck == false){
-            holder.imgFavorite.setImageResource(R.drawable.hearth);
-            Ultils.userFavorite.remove(user1);
-
-        }else {
-            holder.imgFavorite.setImageResource(R.drawable.hearthred);
-            if(user1 != null) {
-                Log.d("usersave",user1.getName());
-                if(!Ultils.userFavorite.contains(user1)) {
-                    Ultils.userFavorite.add(user1);
-                }
-            }else {
-                Log.d("userSave", "Null");
-            }
-        }
+//        ischeck = DataLocal2.getFavorite(position);
+//        User user1 = DataLocal2.getUser(position);
+//        if(ischeck == false){
+//            holder.imgFavorite.setImageResource(R.drawable.hearth);
+//            Ultils.userFavorite.remove(user1);
+//
+//        }else {
+//            holder.imgFavorite.setImageResource(R.drawable.hearthred);
+//            if(user1 != null) {
+//                Log.d("usersave",user1.getName());
+//                if(!Ultils.userFavorite.contains(user1)) {
+//                    Ultils.userFavorite.add(user1);
+//                }
+//            }else {
+//                Log.d("userSave", "Null");
+//            }
+//        }
 
         //Cách 1; update với activity
 //        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {

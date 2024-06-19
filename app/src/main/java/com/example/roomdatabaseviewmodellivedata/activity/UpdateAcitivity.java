@@ -22,8 +22,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.roomdatabaseviewmodellivedata.R;
-import com.example.roomdatabaseviewmodellivedata.User;
-import com.example.roomdatabaseviewmodellivedata.ViewModel5;
+import com.example.roomdatabaseviewmodellivedata.model.User;
+import com.example.roomdatabaseviewmodellivedata.viewmodel.ViewModel5;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

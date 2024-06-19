@@ -1,10 +1,13 @@
-package com.example.roomdatabaseviewmodellivedata;
+package com.example.roomdatabaseviewmodellivedata.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.example.roomdatabaseviewmodellivedata.reponsitory.Reponsitory4;
+import com.example.roomdatabaseviewmodellivedata.model.User;
 
 import java.util.List;
 

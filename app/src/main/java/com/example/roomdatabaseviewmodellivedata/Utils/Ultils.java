@@ -1,6 +1,6 @@
 package com.example.roomdatabaseviewmodellivedata.Utils;
 
-import com.example.roomdatabaseviewmodellivedata.User;
+import com.example.roomdatabaseviewmodellivedata.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

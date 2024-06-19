@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,8 +26,8 @@ import android.widget.Toast;
 
 
 import com.example.roomdatabaseviewmodellivedata.R;
-import com.example.roomdatabaseviewmodellivedata.User;
-import com.example.roomdatabaseviewmodellivedata.ViewModel5;
+import com.example.roomdatabaseviewmodellivedata.model.User;
+import com.example.roomdatabaseviewmodellivedata.viewmodel.ViewModel5;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

@@ -2,7 +2,7 @@ package com.example.roomdatabaseviewmodellivedata.sharePrefence;
 
 import android.content.Context;
 
-import com.example.roomdatabaseviewmodellivedata.User;
+import com.example.roomdatabaseviewmodellivedata.model.User;
 import com.google.gson.Gson;
 
 public class DataLocal2 {

@@ -1,4 +1,4 @@
-package com.example.roomdatabaseviewmodellivedata;
+package com.example.roomdatabaseviewmodellivedata.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -17,8 +17,17 @@ public class User implements Serializable {
     private  String address;
     @ColumnInfo(name = "user_image")
     private  String image;
-
+    @ColumnInfo(name = "user_favorite")
+    private int isFavorite =0;
     public User() {
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     public User(String name, String address, String image) {

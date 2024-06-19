@@ -28,11 +28,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.roomdatabaseviewmodellivedata.R;
-import com.example.roomdatabaseviewmodellivedata.User;
-import com.example.roomdatabaseviewmodellivedata.Utils.Ultils;
+import com.example.roomdatabaseviewmodellivedata.model.User;
 import com.example.roomdatabaseviewmodellivedata.fragment.FavoriteFragment;
 import com.example.roomdatabaseviewmodellivedata.adapter.UserAdapter;
-import com.example.roomdatabaseviewmodellivedata.ViewModel5;
+import com.example.roomdatabaseviewmodellivedata.viewmodel.ViewModel5;
 import com.example.roomdatabaseviewmodellivedata.fragment.UpdateFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 handleDeleteUser(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(recyclerView);
-        // Add item usser
+        // Add item user
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
                 transaction.addToBackStack("fragmentUpdate");
                 transaction.commit();
             }
+
+            @Override
+            public void onClickUpateFavo(int pos, int favo) {
+                User user = userList.get(pos);
+                user.setIsFavorite(favo);
+                viewModel5.updateUser(user);
+            }
+
+
         });
         recyclerView.setAdapter(userAdapter);
         btnFavorite.setOnClickListener(new View.OnClickListener() {
