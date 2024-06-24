@@ -1,5 +1,6 @@
 package com.example.roomdatabaseviewmodellivedata.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,10 +28,13 @@ import com.example.roomdatabaseviewmodellivedata.R;
 import com.example.roomdatabaseviewmodellivedata.model.User;
 import com.example.roomdatabaseviewmodellivedata.viewmodel.ViewModel5;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 public class AddActitity extends AppCompatActivity {
     ImageView imgfolder, imgcamera, imgUser;
@@ -72,7 +76,7 @@ public class AddActitity extends AppCompatActivity {
         imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImagePicker();
+                handlerPermission();
             }
         });
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +93,25 @@ public class AddActitity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void handlerPermission() {
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                openImagePicker();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        TedPermission.create()
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check();
     }
 
     private void openImagePicker() {
