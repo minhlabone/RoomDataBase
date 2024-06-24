@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,7 +75,16 @@ public class FavoriteFragment extends Fragment implements View.OnTouchListener {
         userAdapter = new UserAdapter(userList, getContext(), new UserAdapter.ItemClickListener() {
             @Override
             public void onClickUpdate(int pos) {
-
+                UpdateFragment updateFragment = new UpdateFragment();
+                User user = userList.get(pos);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("sendData",user);
+                updateFragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction().setCustomAnimations(R.anim.update_fragment_in,R.anim.update_fragment_out);
+                transaction.replace(R.id.updateFragment,updateFragment);
+                transaction.addToBackStack("fragmentUpdate");
+                transaction.commit();
             }
 
             @Override

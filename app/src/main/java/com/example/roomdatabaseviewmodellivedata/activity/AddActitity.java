@@ -1,5 +1,6 @@
 package com.example.roomdatabaseviewmodellivedata.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.roomdatabaseviewmodellivedata.R;
 import com.example.roomdatabaseviewmodellivedata.model.User;
 import com.example.roomdatabaseviewmodellivedata.viewmodel.ViewModel5;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -67,6 +69,12 @@ public class AddActitity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_FOLDER);
             }
         });
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImagePicker();
+            }
+        });
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +91,14 @@ public class AddActitity extends AppCompatActivity {
         });
     }
 
+    private void openImagePicker() {
+        ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+    }
+
     private void initView() {
         imgcamera = findViewById(R.id.image_camera);
         imgfolder = findViewById(R.id.image_folder);
@@ -95,6 +111,28 @@ public class AddActitity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            Uri uri = data.getData();
+            InputStream inputStream = null;
+            try {
+                inputStream = getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imgUser.setImageBitmap(bitmap);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+                byte[] bytes = byteArrayOutputStream.toByteArray();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    path = Base64.encodeToString(bytes, Base64.DEFAULT);
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
         if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK && data != null) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             if (imgUser != null) {

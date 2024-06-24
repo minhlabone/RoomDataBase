@@ -49,5 +49,7 @@ dependencies {
     // LiveData
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
     implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
+
 
 }
